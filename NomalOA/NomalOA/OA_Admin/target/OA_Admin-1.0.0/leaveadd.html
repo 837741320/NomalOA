@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoveJob-流程新增</title>
+    <link rel="stylesheet" href="media/layui/css/layui.css">
+    <script type="application/javascript" src="media/js/jquery.min.js"></script>
+    <script type="application/javascript" src="media/layui/layui.js"></script>
+    <script type="application/javascript" src="media/js/app.js"></script>
+</head>
+<body>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>新增流程</legend>
+</fieldset>
+<form class="layui-form" id="demo1" action="leaveadd.do" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名：</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" id="un1" value="admin" lay-verify="required" readonly class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">天数：</label>
+        <div class="layui-input-block">
+            <input type="text" name="days" lay-verify="required"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">日期：</label>
+        <div class="layui-input-block">
+            <input type="text" name="startdate" id="date1" lay-verify="required" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">审批人：</label>
+        <div class="layui-input-block">
+            <select name="rname">
+                <option value="-1">--请选择审批人--</option>
+                <option value="admin">管理员</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">原因：</label>
+        <div class="layui-input-block">
+            <input type="text" name="reason" lay-verify="required" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" id="btn1" lay-filter="demo1">新增请假</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script type="application/javascript">
+    layui.use(['form','laydate'], function(){
+        var form = layui.form;
+        var laydate = layui.laydate;
+        //$("#un1").val(username);
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#date1' //指定元素
+        });
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.msg(data.field);
+            return true;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1、引擎的配置对象-->
+    <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="databaseSchemaUpdate" value="true"></property>
+        <property name="labelFontName" value="宋体"></property>
+        <property name="activityFontName" value="宋体"></property>
+    </bean>
+    <!--2、创建引擎对象-->
+    <bean id="processEngine" class="org.activiti.engine.ProcessEngine"
+          factory-bean="processEngineConfiguration" factory-method="buildProcessEngine"></bean>
+
+    <!--3、配置各种服务-->
+    <!--仓库服务-->
+    <bean id="repositoryService" class="org.activiti.engine.RepositoryService" factory-bean="processEngine" factory-method="getRepositoryService"></bean>
+    <!--运行服务-->
+    <bean id="runtimeService" class="org.activiti.engine.RuntimeService" factory-bean="processEngine" factory-method="getRuntimeService"></bean>
+    <!--任务服务-->
+    <bean id="taskService" class="org.activiti.engine.TaskService" factory-bean="processEngine" factory-method="getTaskService"></bean>
+    <!--历史服务-->
+    <bean id="historyService" class="org.activiti.engine.HistoryService" factory-bean="processEngine" factory-method="getHistoryService"></bean>
+
+
+
+
+
+
+</beans>

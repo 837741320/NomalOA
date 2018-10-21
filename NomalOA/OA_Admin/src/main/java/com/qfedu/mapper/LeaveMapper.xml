@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.mapper.LeaveMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.domain.Leave">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+    <result column="startdate" jdbcType="DATE" property="startdate" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="taskid" jdbcType="VARCHAR" property="taskid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, days, startdate, createtime, reason, flag, taskid
+  </sql>
+  <select id="selectByPage"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_leave limit #{index},#{count}
+  </select>
+  <select id="selectCount" resultType="int">
+    select COUNT(*) from t_leave;
+  </select>
+
+  <select id="selectByUid" resultType="com.qfedu.domain.Leave">
+    select l.*,u.name uname from t_leave l left join t_user u on l.uid=u.id  where l.uid=#{uid}
+  </select>
+  <insert id="insert" parameterType="com.qfedu.domain.Leave" useGeneratedKeys="true" keyProperty="id">
+    insert into t_leave (uid, days, startdate, createtime, reason,  flag, taskid)
+    values ( #{uid,jdbcType=INTEGER}, #{days,jdbcType=INTEGER},
+      #{startdate,jdbcType=DATE}, now(), #{reason,jdbcType=VARCHAR},
+      0, #{taskid,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateFlag" >
+    update t_leave set flag=#{flag} where id=#{id}
+  </update>
+</mapper>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoveJob-ç»å½é¡µé¢</title>
+    <link href="media/layui/css/layui.css" rel="stylesheet">
+    <script type="application/javascript" src="media/js/jquery.min.js"></script>
+    <script type="application/javascript" src="media/layui/layui.js"></script>
+</head>
+<body style="background-image: url('http://img5.imgtn.bdimg.com/it/u=2462155414,1642981069&fm=27&gp=0.jpg')">
+<div class="layui-container" style="margin-top: 10%">
+    <div class="layui-row">
+        <div class="layui-col-lg-offset2 layui-col-lg8 layui-col-md8" style="border: 1px solid red">
+            <h1 style="text-align: center;margin-bottom: 10px">LoveJobç³»ç»æ¬¢è¿ä½ </h1>
+            <form class="layui-form layui-form-pane" style="width: 100%" action="userlogin.do" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">ç¨æ·åï¼</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required lay-verify="required" placeholder="è¯·è¾å¥ç¨æ·å"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">å¯&nbsp;&nbsp;&nbsp;ç ï¼</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" required lay-verify="required"
+                               placeholder="è¯·è¾å¥å¯ç " class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">è®°ä½æ</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="remberme" lay-skin="switch">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo" style="width: 120px">ç»å½</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //çå¬æäº¤
+        form.on('submit(formDemo)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return true;
+        });
+    });
+</script>
+
+</body>
+</html>

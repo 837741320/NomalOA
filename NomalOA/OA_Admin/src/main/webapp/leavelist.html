@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoveJob_我的待办事项</title>
+    <link rel="stylesheet" href="media/layui/css/layui.css">
+    <script type="application/javascript" src="media/js/jquery.min.js"></script>
+    <script type="application/javascript" src="media/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>我的待办事项</legend>
+    </fieldset>
+    <table id="userdata" lay-filter="tableop"></table>
+    <script type="text/html" id="tarop">
+        <a class="layui-btn layui-btn-xs" lay-event="ok">确认</a>
+        <a class="layui-btn layui-btn-xs" lay-event="error">取消</a>
+    </script>
+</div>
+
+<script type="application/javascript">
+    layui.use('table', function() {
+        var table = layui.table;
+       var tbins= table.render({
+            elem: '#userdata'
+            , height: 'full-40'
+            , url: 'leavelist.do' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'id', title: 'ID',  sort: true, fixed: 'left'}
+                , {field: 'uname', title: '姓名'}
+                , {field: 'startdate', title: '开始日期'}
+                , {field: 'days', title: '天数'}
+                , {field: 'createtime', title: '提交时间'}
+                , {field: 'reason', title: '原因'}
+                , {field: 'taskid', title: '任务'}
+                , {field: 'flag', title: '状态', templet: function(d){
+                    var r="";
+                    var color="";
+                    switch (d.flag){
+                        case 0: r="新建";color="layui-bg-green";break;
+                        case 1: r="申请";color="layui-bg-red";break;
+                        case 2: r="通过";color="layui-bg-blue";break;
+                        case 3: r="拒绝";color="layui-bg-orange";break;
+                    }
+                    return "<label class='"+color+"'>"+r+"</label>";
+                }
+                }
+                , {fixed:'right', title: '操作',toolbar:"#tarop"}
+            ]]
+        });
+        //监听工具条
+        table.on('tool(tableop)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'ok'){
+                $.get("leaveupdate.do",'tid='+data.taskid+"&flag=2&id="+data.id,function (obj) {
+                    lay.msg("批准成功");
+                    tbins.reload( {
+                      page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                })
+                //layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'error'){
+                layer.confirm('真的拒绝吗？', function(index){
+                    $.get("leaveupdate.do",'tid='+data.taskid+"&flag=3&id="+data.id,function (obj) {
+                        obj.del();
+                        layer.close(index);
+                        tbins.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    });
+                });
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

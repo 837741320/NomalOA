@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoveJob_流程历史</title>
+    <link rel="stylesheet" href="media/layui/css/layui.css">
+    <script type="application/javascript" src="media/js/jquery.min.js"></script>
+    <script type="application/javascript" src="media/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>流程历史</legend>
+    </fieldset>
+
+    <table id="userdata" lay-filter="tableop"></table>
+
+</div>
+
+<script type="application/javascript">
+    layui.use('table', function() {
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#userdata'
+            , height: 'full-40'
+            , url: 'leavehislist.do' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'id', title: 'ID',  sort: true, fixed: 'left'}
+                , {field: 'processDefinitionId', title: '流程定义'}
+                , {field: 'processInstanceId', title: '流程实例'}
+                , {field: 'name', title: '名称'}
+                , {field: 'assignee', title: '审批人'}
+                , {field: 'createTime', title: '创建时间'}
+                , {field: 'startTime', title: '开始时间'}
+                , {field: 'endTime', title: '结束时间'}
+            ]]
+        });
+
+    });
+
+</script>
+</body>
+</html>

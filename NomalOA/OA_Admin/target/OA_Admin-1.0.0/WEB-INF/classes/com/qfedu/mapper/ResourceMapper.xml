@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.mapper.ResourceMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.domain.Resource">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="per" jdbcType="VARCHAR" property="per" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="parentid" jdbcType="INTEGER" property="parentid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, per, icon, type, parentid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_resource
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_resource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.domain.Resource">
+    insert into t_resource (name, per,  icon, type, parentid )
+    values (#{name,jdbcType=VARCHAR}, #{per,jdbcType=VARCHAR},
+      #{icon}, #{type,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER} )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.domain.Resource">
+    update t_resource
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="per != null">
+        per = #{per,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        icon = #{icon},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null">
+        parentid = #{parentid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.domain.Resource">
+    update t_resource
+    set name = #{name,jdbcType=VARCHAR},
+      per = #{per,jdbcType=VARCHAR},
+      icon = #{icon},
+      type = #{type,jdbcType=INTEGER},
+      parentid = #{parentid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryByUserName" resultType="com.qfedu.domain.Resource">
+    select r.* from  t_resource r
+    left join t_roleres rr on r.id=rr.resid
+    left join t_userrole ur on ur.rid=rr.rid
+    left join t_user u on ur.uid=u.id
+    where r.type=1 and u.name=#{name} order by r.parentid,r.id;
+  </select>
+  <select id="selectByUid" resultType="com.qfedu.domain.Resource">
+   select r.* from  t_resource r
+      left join t_roleres rr on r.id=rr.resid
+      left join t_userrole ur on ur.rid=rr.rid
+      left join t_user u on ur.uid=u.id
+      where r.type=2 and u.id=#{uid} order by r.id ;
+  </select>
+
+  <select id="selectByPid" resultType="com.qfedu.domain.Resource">
+    select * from t_resource where type=1 and parentid=-1 order by id;
+  </select>
+
+  <select id="selectByPage" resultType="com.qfedu.domain.Resource">
+    select * from t_resource limit #{index},#{count}
+  </select>
+  <select id="selectCount" resultType="int">
+    select COUNT(*) from t_resource;
+  </select>
+</mapper>

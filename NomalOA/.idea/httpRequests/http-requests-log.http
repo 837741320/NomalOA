@@ -1,0 +1,16 @@
+GET http://localhost:8080/leavelist.do
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-08-18T101223.200.html
+
+###
+
+GET http://localhost:8080/leavelist.do
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-08-18T122321.200.html
+
+###
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.mapper.LeaveLogMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.domain.LeaveLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="lid" jdbcType="INTEGER" property="lid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, lid, type, createtime, msg
+  </sql>
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_leavelog limit #{index},#{count}
+  </select>
+  <select id="selectCount" resultType="int">
+    select count(*) from t_leavelog
+  </select>
+
+  <insert id="insert" parameterType="com.qfedu.domain.LeaveLog">
+    insert into t_leavelog ( uid, lid,  type, createtime, msg)
+    values ( #{uid,jdbcType=INTEGER}, #{lid,jdbcType=INTEGER},
+      #{type,jdbcType=INTEGER}, now(), #{msg,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>

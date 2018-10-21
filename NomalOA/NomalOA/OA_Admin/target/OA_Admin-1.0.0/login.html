@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoveJob-登录页面</title>
+    <link href="media/layui/css/layui.css" rel="stylesheet">
+    <script type="application/javascript" src="media/js/jquery.min.js"></script>
+    <script type="application/javascript" src="media/layui/layui.js"></script>
+    <script type="application/javascript" src="media/js/app.js"></script>
+</head>
+<body style="background-image: url('http://img5.imgtn.bdimg.com/it/u=2462155414,1642981069&fm=27&gp=0.jpg')">
+<div class="layui-container" style="margin-top: 10%">
+    <div class="layui-row">
+        <div class="layui-col-lg-offset2 layui-col-lg8 layui-col-md8" style="border: 1px solid red">
+            <h1 style="text-align: center;margin-bottom: 10px">LoveJob系统欢迎你</h1>
+            <form class="layui-form layui-form-pane" style="width: 100%" action="userlogin.do" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required  lay-verify="required" placeholder="请输入用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密&nbsp;&nbsp;&nbsp;码：</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码"  class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">记住我</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="remberme" lay-skin="switch">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo" style="width: 120px">登录</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            username=data.name;
+            layer.msg(data);
+            return true;
+        });
+    });
+</script>
+
+</body>
+</html>
